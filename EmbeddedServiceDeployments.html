@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+	<title>嵌入服务</title>
+</head>
+
+<style type='text/css'>
+	.embeddedServiceHelpButton .helpButton .uiButton {
+		background-color: #323232;
+		font-family: "Arial", sans-serif;
+	}
+	.embeddedServiceHelpButton .helpButton .uiButton:focus {
+		outline: 1px solid #323232;
+	}
+</style>
+<script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+<script type='text/javascript' src='https://roborockasia--uat.sandbox.my.salesforce.com/embeddedservice/5.0/esw.min.js'></script>
+<script type='text/javascript'>
+	var initESW = function(gslbBaseURL) {
+		embedded_svc.settings.displayHelpButton = true; //或为假
+		embedded_svc.settings.language = ''; //例如，输入 'en' 或 'en-US'
+
+		//embedded_svc.settings.defaultMinimizedText = '...'; //（默认设置为与专家聊天）
+		//embedded_svc.settings.disabledMinimizedText = '...'; //（默认设置为客服人员离线）
+
+		//embedded_svc.settings.loadingText = ''; //（默认设置为正在加载）
+		//embedded_svc.settings.storageDomain = 'yourdomain.com'; //（为部署设置域，这样访客可在聊天会话期间导航子域。）
+
+		// 聊天 的设置
+		//embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+			// Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+			// Returns a valid button ID.
+		//};
+		//embedded_svc.settings.prepopulatedPrechatFields = {}; //设置自动填充聊天前表单格字段
+		//embedded_svc.settings.fallbackRouting = []; //按钮 ID、用户 ID 或 userId_buttonId 的数组
+		//embedded_svc.settings.offlineSupportMinimizedText = '...'; //（默认设置为联系我们）
+
+		embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+		embedded_svc.settings.entryFeature = 'LiveAgent';
+
+		embedded_svc.init(
+			'https://roborockasia--uat.sandbox.my.salesforce.com',
+			'https://roborockasia--uat.sandbox.my.salesforce-sites.com/',
+			gslbBaseURL,
+			'00DA8000000bFkr',
+			'LiveChat',
+			{
+				baseLiveAgentContentURL: 'https://c.la12s-core1.sfdc-mchho0.salesforceliveagent.com/content',
+				deploymentId: '572BB000000001D',
+				buttonId: '573BB000000001h',
+				baseLiveAgentURL: 'https://d.la12s-core1.sfdc-mchho0.salesforceliveagent.com/chat',
+				eswLiveAgentDevName: 'Test_livechat',
+				isOfflineSupportEnabled: true
+			}
+		);
+	};
+	if (!window.embedded_svc) {
+		var s = document.createElement('script');
+		s.setAttribute('src', 'https://roborockasia--uat.sandbox.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+		s.onload = function() {
+			initESW(null);
+		};
+		document.body.appendChild(s);
+	} else {
+		initESW('https://service.force.com');
+	}
+</script>
+</html>
